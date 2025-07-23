@@ -9,5 +9,4 @@ public class EconaviApplication {
     public static void main(String[] args) {
         SpringApplication.run(EconaviApplication.class, args);
     }
-
 }
