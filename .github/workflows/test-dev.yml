@@ -1,0 +1,58 @@
+name: Test-dev
+
+on:
+  pull_request:
+    branches: [ dev ]
+env:
+  IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+
+jobs:
+  test-dev:
+    runs-on: ubuntu-latest
+    environment: econavi-backend
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: econavi_test
+          MYSQL_USER: econavi_test
+          MYSQL_PASSWORD: econaviTest
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant execute permission to gradlew
+        run: chmod +x ./gradlew
+        working-directory: ./econavi
+
+      - name: Run tests
+        working-directory: ./econavi
+        env:
+          DB_HOST: localhost
+          DB_USER: econavi_test
+          DB_PASSWORD: econaviTest
+          DB_ROOT_PASSWORD: password
+          DB_PORT: 3306
+          DB_NAME: econavi_test
+        run: ./gradlew clean test -Dspring.profiles.active=test --stacktrace --info
