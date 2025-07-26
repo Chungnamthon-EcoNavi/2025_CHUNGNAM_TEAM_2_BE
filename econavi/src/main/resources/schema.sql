@@ -1,1 +1,3 @@
-CREATE members {}
+CREATE TABLE IF NOT EXISTS members {
+    id BIGINT PRIMARY KEY
+    };
