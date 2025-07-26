@@ -43,7 +43,7 @@ jobs:
           java-version: '17'
 
       - name: Run tests
-        working-directory: ./econavi-backend/econavi
+        working-directory: ./econavi
         env:
           DB_HOST: localhost
           DB_USER: econavi_test

@@ -23,7 +23,7 @@ jobs:
           java-version: '17'
 
       - name: Build JAR
-        working-directory: ./econavi-backend/econavi
+        working-directory: ./econavi
         run: ./gradlew bootJar
 
       - name: Docker login
@@ -33,7 +33,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build & Push Docker image
-        working-directory: ./econavi-backend/econavi
+        working-directory: ./econavi
         run: |
           docker build -t ${{ secrets.IMAGE_NAME }}:latest .
           docker push ${{ secrets.IMAGE_NAME }}:latest
