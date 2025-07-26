@@ -7,7 +7,7 @@ env:
   IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
 
 jobs:
-  test-main:
+  test-dev:
     runs-on: ubuntu-latest
     environment: econavi-backend
 
@@ -41,6 +41,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Grant execute permission to gradlew
+        run: chmod +x ./gradlew
+        working-directory: ./econavi
 
       - name: Run tests
         working-directory: ./econavi

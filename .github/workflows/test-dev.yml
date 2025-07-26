@@ -42,6 +42,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Grant execute permission to gradlew
+        run: chmod +x ./gradlew
+        working-directory: ./econavi
+
       - name: Run tests
         working-directory: ./econavi
         env:
