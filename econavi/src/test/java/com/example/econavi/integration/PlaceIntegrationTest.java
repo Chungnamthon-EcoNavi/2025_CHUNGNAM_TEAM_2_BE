@@ -1,7 +1,7 @@
 package com.example.econavi.integration;
 
 import com.example.econavi.auth.security.JwtUtil;
-import com.example.econavi.member.entity.entity.Member;
+import com.example.econavi.member.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
 import com.example.econavi.member.type.Role;
 import com.example.econavi.place.dto.AddPlaceRequestDto;

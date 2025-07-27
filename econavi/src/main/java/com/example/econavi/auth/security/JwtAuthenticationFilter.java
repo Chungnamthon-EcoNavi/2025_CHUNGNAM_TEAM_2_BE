@@ -1,7 +1,7 @@
 package com.example.econavi.auth.security;
 
 import com.example.econavi.auth.exception.AuthAuthenticationEntryPoint;
-import com.example.econavi.member.entity.entity.Member;
+import com.example.econavi.member.entity.Member;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

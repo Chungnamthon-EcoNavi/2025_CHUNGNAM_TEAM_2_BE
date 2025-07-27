@@ -7,7 +7,7 @@ import com.example.econavi.auth.security.JwtUtil;
 import com.example.econavi.common.code.AuthResponseCode;
 import com.example.econavi.common.code.GeneralResponseCode;
 import com.example.econavi.common.exception.ApiException;
-import com.example.econavi.member.entity.entity.Member;
+import com.example.econavi.member.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

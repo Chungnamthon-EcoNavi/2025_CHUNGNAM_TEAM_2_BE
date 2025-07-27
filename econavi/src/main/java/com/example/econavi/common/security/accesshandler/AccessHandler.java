@@ -1,6 +1,6 @@
 package com.example.econavi.common.security.accesshandler;
 
-import com.example.econavi.member.entity.entity.Member;
+import com.example.econavi.member.entity.Member;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

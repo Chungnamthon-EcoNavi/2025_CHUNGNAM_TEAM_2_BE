@@ -1,9 +1,7 @@
 package com.example.econavi.place.dto;
 
-import com.example.econavi.member.entity.entity.Member;
 import com.example.econavi.place.entity.Place;
 import com.example.econavi.place.type.PlaceType;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
