@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -59,6 +60,8 @@ public class AuthService {
         return memberRepository.save(member).getUsername();
     }
 
+    @PreAuthorize("@memberAccessHandler.ownershipCheck(#memberId)")
+    @Transactional(readOnly = true)
     public void logout(Long memberId, String token) {
         memberRepository.findById(memberId)
                 .orElseThrow(() -> new ApiException(HttpStatus.UNAUTHORIZED, "사용자가 존재하지 않습니다."));
