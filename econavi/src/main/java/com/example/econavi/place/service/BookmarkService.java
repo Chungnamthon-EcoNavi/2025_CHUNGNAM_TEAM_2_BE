@@ -3,7 +3,7 @@ package com.example.econavi.place.service;
 import com.example.econavi.common.code.AuthResponseCode;
 import com.example.econavi.common.code.GeneralResponseCode;
 import com.example.econavi.common.exception.ApiException;
-import com.example.econavi.member.entity.entity.Member;
+import com.example.econavi.member.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
 import com.example.econavi.place.dto.BookmarkDto;
 import com.example.econavi.place.entity.Bookmark;

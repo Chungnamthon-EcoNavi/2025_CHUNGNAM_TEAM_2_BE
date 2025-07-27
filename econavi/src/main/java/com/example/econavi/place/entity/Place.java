@@ -1,6 +1,6 @@
 package com.example.econavi.place.entity;
 
-import com.example.econavi.member.entity.entity.Member;
+import com.example.econavi.member.entity.Member;
 import com.example.econavi.place.type.PlaceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
