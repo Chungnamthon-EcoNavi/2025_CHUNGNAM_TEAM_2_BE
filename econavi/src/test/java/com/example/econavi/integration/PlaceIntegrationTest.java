@@ -60,7 +60,7 @@ class PlaceIntegrationTest {
                 .username("test@example.com")
                 .name("Test User")
                 .password("password")
-                .role(Role.USER)
+                .role(Role.STAFF)
                 .build());
 
         validToken = jwtUtil.generateToken(testMember.getId());
@@ -102,6 +102,21 @@ class PlaceIntegrationTest {
     @DisplayName("[PlaceController][Integration] addPlace test_unauthorized")
     void addPlace_test_unauthorized() throws Exception {
         String json = new ObjectMapper().writeValueAsString(addPlaceRequest);
+
+        Member unauthorizedMember = memberRepository.save(Member.builder()
+                .username("test2@example.com")
+                .name("Test User2")
+                .password("password")
+                .role(Role.USER)
+                .build());
+        String token = jwtUtil.generateToken(unauthorizedMember.getId());
+
+        // 일반 유저인 경우
+        mockMvc.perform(post("/place/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token)
+                        .content(json))
+                .andExpect(status().isUnauthorized());
 
         // Authorization 헤더 없음
         mockMvc.perform(post("/place/add")

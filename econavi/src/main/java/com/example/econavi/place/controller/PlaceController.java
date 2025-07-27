@@ -22,11 +22,10 @@ public class PlaceController {
 
     @GetMapping("")
     public ResponseEntity<List<PlaceDto>> getPlaces(
-            @RequestParam Long place_id,
             @RequestParam(required = false) Long last_id,
             @RequestParam(defaultValue = "10") int size
     ) {
-        return ResponseEntity.ok(placeService.getPlaces(place_id, last_id, size));
+        return ResponseEntity.ok(placeService.getPlaces(last_id, size));
     }
 
     @PostMapping("/add")
