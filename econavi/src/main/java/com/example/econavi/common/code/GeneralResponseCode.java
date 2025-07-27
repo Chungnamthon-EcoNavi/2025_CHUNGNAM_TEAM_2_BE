@@ -1,0 +1,17 @@
+package com.example.econavi.common.code;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+
+@AllArgsConstructor
+@Getter
+public enum GeneralResponseCode implements ApiResponseCode {
+    PLACE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 장소입니다."),
+    DUPLICATED_PLACE(HttpStatus.CONFLICT, "주소에 중복된 장소가 존재합니다."),
+    DUPLICATED_USERNAME(HttpStatus.CONFLICT, "중복된 계정입니다."),
+    LOGIN_OK(HttpStatus.OK, "로그인에 성공했습니다.");
+
+    private final HttpStatus status;
+    private final String message;
+}
