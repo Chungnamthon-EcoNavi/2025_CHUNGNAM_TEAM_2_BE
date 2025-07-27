@@ -20,14 +20,16 @@ public class SignUpRequestDto {
     private String username;
 
     @NotBlank
-    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{2,16}$", message = "이름은 2~16자, 한글과 알파벳 또는 숫자만 허용됩니다.")
+    @Pattern(regexp = "^[가-힣a-zA-Z0-9]{2,16}$", message = "이름은 2~16자, 한글/영문/숫자만 허용됩니다.")
     private String name;
 
     @NotNull
     private Role role;
 
     @NotBlank
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,128}$", message = "비밀번호는 8자 이상, 숫자와 알파벳이 포함되어야 합니다.")
-    //최소 8자, 숫자와 알파벳
+    @Pattern(
+            regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()_+=\\-{}\\[\\]:;\"'<>,.?/]).{8,128}$",
+            message = "비밀번호는 8자 이상이어야 하며 알파벳, 숫자, 특수문자를 각각 최소 하나 포함해야 합니다."
+    )    //최소 8자, 숫자와 알파벳과 특수문자
     private String password;
 }
