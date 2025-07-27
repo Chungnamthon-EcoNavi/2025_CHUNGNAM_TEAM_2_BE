@@ -1,6 +1,6 @@
 package com.example.econavi.place.repository;
 
-import com.example.econavi.member.entity.entity.Member;
+import com.example.econavi.member.entity.Member;
 import com.example.econavi.place.entity.Bookmark;
 import com.example.econavi.place.entity.Place;
 import org.springframework.data.jpa.repository.JpaRepository;

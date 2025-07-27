@@ -1,4 +1,4 @@
-package com.example.econavi.member.entity.entity;
+package com.example.econavi.member.entity;
 
 import com.example.econavi.member.type.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
