@@ -5,6 +5,7 @@ import com.example.econavi.common.code.GeneralResponseCode;
 import com.example.econavi.common.exception.ApiException;
 import com.example.econavi.member.entity.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
+import com.example.econavi.member.type.Role;
 import com.example.econavi.place.dto.AddPlaceRequestDto;
 import com.example.econavi.place.dto.PlaceDto;
 import com.example.econavi.place.entity.Place;
@@ -39,6 +40,10 @@ public class PlaceService {
     public PlaceDto addPlace(Long memberId, AddPlaceRequestDto request) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new ApiException(AuthResponseCode.MEMBER_NOT_FOUND));
+
+        if(member.getRole() != Role.STAFF){
+            throw new ApiException(AuthResponseCode.UNAUTHORIZED);
+        }
 
         int count = placeRepository.countByNameAndAddress(request.getName(), request.getAddress());
 
