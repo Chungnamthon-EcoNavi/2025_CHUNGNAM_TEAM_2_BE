@@ -8,4 +8,5 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
     List<Bookmark> findByUserId(String userId);
     void deleteByPlaceIdAndUserId(Long placeId, String userId);
+
 }

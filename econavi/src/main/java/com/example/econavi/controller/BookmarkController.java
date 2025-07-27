@@ -36,4 +36,5 @@ public class BookmarkController {
     public void removeBookmark(@PathVariable Long placeId, @RequestParam String userId) {
         bookmarkService.deleteBookmarkByUser(placeId, userId);
     }
+
 }

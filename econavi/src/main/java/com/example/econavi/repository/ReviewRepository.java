@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByPlaceId(Long placeId);
+
 }

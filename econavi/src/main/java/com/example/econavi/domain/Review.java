@@ -25,5 +25,5 @@ public class Review {
     private String userId; // 작성자
 
     @Column(nullable = false)
-    private int rating;
+    private int rating; //별점
 }

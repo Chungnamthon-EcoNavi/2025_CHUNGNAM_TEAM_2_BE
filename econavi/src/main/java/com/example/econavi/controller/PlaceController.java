@@ -67,4 +67,5 @@ public class PlaceController {
         }
         placeService.deletePlace(id);
     }
+
 }

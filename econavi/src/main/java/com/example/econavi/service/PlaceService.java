@@ -36,4 +36,5 @@ public class PlaceService {
     public void deletePlace(Long id) {
         placeRepository.deleteById(id);
     }
+
 }

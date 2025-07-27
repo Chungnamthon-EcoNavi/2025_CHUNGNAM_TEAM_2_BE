@@ -47,4 +47,5 @@ public class BookmarkService {
     // placeId + userId 조합으로 삭제가 필요하다면 아래 메서드도 사용 가능
     public void deleteBookmarkByPlaceAndUser(Long placeId, String userId) {
     }
+
 }

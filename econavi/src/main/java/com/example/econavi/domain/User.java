@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class User {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -17,4 +18,5 @@ public class User {
 
     //"BUSINESS" (사업자), "NORMAL" (일반) 구분
     private String userType;
+
 }

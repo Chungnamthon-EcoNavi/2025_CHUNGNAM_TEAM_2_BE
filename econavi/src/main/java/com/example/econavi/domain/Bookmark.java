@@ -19,5 +19,6 @@ public class Bookmark {
     private Long placeId; // 어떤 장소를 찜했는지
 
     @Column(nullable = false)
-    private String userId; // 로그인 사용자 ID
+    private String userId; // 북마크 한 사용자 ID
+
 }
