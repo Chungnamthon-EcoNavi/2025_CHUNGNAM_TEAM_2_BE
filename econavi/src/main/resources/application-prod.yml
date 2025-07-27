@@ -13,5 +13,4 @@ server:
 
 jwt:
   secret: ${JWT_SECRET}
-  refresh-token-expiration-time: ${JWT_REFRESH_EXP}
-  access-token-expiration-time: ${JWT_ACCESS_EXP}
+  exp: ${JWT_ACCESS_EXP}
