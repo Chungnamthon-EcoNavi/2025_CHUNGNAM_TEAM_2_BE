@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum GeneralResponseCode implements ApiResponseCode {
     PLACE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 장소입니다."),
+    BOOKMARK_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 찜입니다."),
     DUPLICATED_PLACE(HttpStatus.CONFLICT, "주소에 중복된 장소가 존재합니다."),
     DUPLICATED_USERNAME(HttpStatus.CONFLICT, "중복된 계정입니다."),
+    DUPLICATED_BOOKMARK(HttpStatus.CONFLICT, "이미 찜한 장소입니다."),
     LOGIN_OK(HttpStatus.OK, "로그인에 성공했습니다.");
 
     private final HttpStatus status;
