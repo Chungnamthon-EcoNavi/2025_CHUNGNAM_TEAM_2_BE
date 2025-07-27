@@ -4,6 +4,7 @@ import com.example.econavi.auth.security.JwtUtil;
 import com.example.econavi.place.dto.BookmarkDto;
 import com.example.econavi.place.service.BookmarkService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +29,9 @@ public class BookmarkController {
     @PostMapping("/add/{placeId}")
     public ResponseEntity<BookmarkDto> addBookmark(
             @PathVariable Long placeId,
-            @RequestHeader("Authorization") String authHeader
+            HttpServletRequest request
     ) {
-        String token = authHeader.substring(7); // "Bearer " 제거
+        String token = request.getHeader("Authorization").substring(7);
         Long memberId = jwtUtil.getIdFromToken(token);
 
         return ResponseEntity.ok(bookmarkService.addBookmark(memberId, placeId));
@@ -39,9 +40,9 @@ public class BookmarkController {
     @DeleteMapping("/delete/{bookmarkId}")
     public ResponseEntity<BookmarkDto> deleteBookmark(
             @PathVariable Long bookmarkId,
-            @RequestHeader("Authorization") String authHeader
+            HttpServletRequest request
     ) {
-        String token = authHeader.substring(7); // "Bearer " 제거
+        String token = request.getHeader("Authorization").substring(7);
         Long memberId = jwtUtil.getIdFromToken(token);
 
         return ResponseEntity.ok(bookmarkService.deleteBookmark(memberId, bookmarkId));
