@@ -1,10 +1,10 @@
 package com.example.econavi.auth.security;
 
+import com.example.econavi.common.code.AuthResponseCode;
 import com.example.econavi.common.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -22,8 +22,8 @@ public class JwtBlacklistService {
     public void logoutToken(String token) {
         long remain = jwtUtil.getExpirationFromToken(token).getTime() - System.currentTimeMillis();
 
-        if(isTokenLogout(token)) {
-            throw new ApiException(HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다.");
+        if (isTokenLogout(token)) {
+            throw new ApiException(AuthResponseCode.INVALID_TOKEN);
         }
 
         redisTemplate.opsForValue().set(
@@ -34,8 +34,8 @@ public class JwtBlacklistService {
     }
 
     public void withdrawToken(String token) {
-        if(isTokenLogout(token)) {
-            throw new ApiException(HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다.");
+        if (isTokenLogout(token)) {
+            throw new ApiException(AuthResponseCode.INVALID_TOKEN);
         }
 
         redisTemplate.opsForValue().set(
