@@ -25,7 +25,7 @@ public class PlaceService {
     private final MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
-    public List<PlaceDto> getPlaces(Long placeId, Long lastId, int size) {
+    public List<PlaceDto> getPlaces(Long lastId, int size) {
         long cursor = lastId == null ? 0L : lastId;
         int pageSize = (size <= 0) ? 10 : size;
 
