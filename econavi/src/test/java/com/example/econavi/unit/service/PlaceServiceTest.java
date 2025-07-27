@@ -2,6 +2,7 @@ package com.example.econavi.unit.service;
 
 import com.example.econavi.member.entity.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
+import com.example.econavi.member.type.Role;
 import com.example.econavi.place.dto.AddPlaceRequestDto;
 import com.example.econavi.place.dto.PlaceDto;
 import com.example.econavi.place.entity.Place;
@@ -50,6 +51,7 @@ class PlaceServiceTest {
     void setUp() {
         member = Member.builder()
                 .id(1L)
+                .role(Role.STAFF)
                 .username("testuser")
                 .build();
 
@@ -107,7 +109,7 @@ class PlaceServiceTest {
                 .willReturn(places);
 
         // when
-        List<PlaceDto> result = placeService.getPlaces(null, null, 10);
+        List<PlaceDto> result = placeService.getPlaces(null, 10);
 
         // then
         assertNotNull(result);
