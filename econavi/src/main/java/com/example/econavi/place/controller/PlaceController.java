@@ -5,6 +5,7 @@ import com.example.econavi.place.dto.AddPlaceRequestDto;
 import com.example.econavi.place.dto.PlaceDto;
 import com.example.econavi.place.service.PlaceService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,9 @@ public class PlaceController {
     @PostMapping("/add")
     public ResponseEntity<PlaceDto> addPlace(
             @Valid @RequestBody AddPlaceRequestDto request,
-            @RequestHeader("Authorization") String authHeader
+            HttpServletRequest httpServletRequest
     ) {
-        String token = authHeader.substring(7); // "Bearer " 제거
+        String token = httpServletRequest.getHeader("Authorization").substring(7);
         Long memberId = jwtUtil.getIdFromToken(token);
 
         return ResponseEntity.ok(placeService.addPlace(memberId, request));
