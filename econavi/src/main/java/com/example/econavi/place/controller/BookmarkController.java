@@ -2,7 +2,6 @@ package com.example.econavi.place.controller;
 
 import com.example.econavi.auth.security.JwtUtil;
 import com.example.econavi.place.dto.BookmarkDto;
-import com.example.econavi.place.dto.PlaceDto;
 import com.example.econavi.place.service.BookmarkService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

@@ -5,16 +5,12 @@ import com.example.econavi.common.code.GeneralResponseCode;
 import com.example.econavi.common.exception.ApiException;
 import com.example.econavi.member.entity.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
-import com.example.econavi.member.type.Role;
-import com.example.econavi.place.dto.AddPlaceRequestDto;
 import com.example.econavi.place.dto.BookmarkDto;
-import com.example.econavi.place.dto.PlaceDto;
 import com.example.econavi.place.entity.Bookmark;
 import com.example.econavi.place.entity.Place;
 import com.example.econavi.place.repository.BookmarkRepository;
 import com.example.econavi.place.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,7 +62,7 @@ public class BookmarkService {
     @PreAuthorize("@memberAccessHandler.ownershipCheck(#memberId)")
     public BookmarkDto deleteBookmark(Long memberId, Long bookmarkId) {
         Bookmark bookmark = bookmarkRepository.findById(bookmarkId)
-                        .orElseThrow(() -> new ApiException(GeneralResponseCode.BOOKMARK_NOT_FOUND));
+                .orElseThrow(() -> new ApiException(GeneralResponseCode.BOOKMARK_NOT_FOUND));
         bookmarkRepository.delete(bookmark);
 
         return BookmarkDto.fromEntity(bookmark);
