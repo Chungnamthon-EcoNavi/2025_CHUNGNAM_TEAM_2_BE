@@ -49,15 +49,15 @@ public class PlaceController {
 
     @Operation(
             summary = "주변 장소 검색",
-            description = "미완",
+            description = "거리는 Km 단위",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @GetMapping("/around")
     public ResponseEntity<List<PlaceDto>> aroundPlaces(
             @RequestBody @Valid CoordinateDto currentCoordinate,
-            @RequestParam double distance
+            @RequestParam double distanceInKm
     ) {
-        return ResponseEntity.ok(placeService.getAroundPlaces(currentCoordinate));
+        return ResponseEntity.ok(placeService.getAroundPlaces(currentCoordinate, distanceInKm));
     }
 
     @Operation(
@@ -78,7 +78,7 @@ public class PlaceController {
 
     @Operation(
             summary = "장소 정보 수정",
-            description = "STAF만 사용 가능",
+            description = "STAFF만 사용 가능",
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @PatchMapping("/update/{placeId}")
