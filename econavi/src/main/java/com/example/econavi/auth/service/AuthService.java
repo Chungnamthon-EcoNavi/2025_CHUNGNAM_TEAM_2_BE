@@ -9,6 +9,8 @@ import com.example.econavi.common.code.GeneralResponseCode;
 import com.example.econavi.common.exception.ApiException;
 import com.example.econavi.member.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
+import com.example.econavi.point.entity.Point;
+import com.example.econavi.point.repository.PointRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final MemberRepository memberRepository;
+    private final PointRepository pointRepository;
     private final JwtUtil jwtUtil;
     private final JwtBlacklistService jwtBlacklistService;
     private final PasswordEncoder passwordEncoder;
@@ -58,7 +61,15 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
 
-        return memberRepository.save(member).getUsername();
+        member = memberRepository.save(member);
+
+        Point point = Point.builder()
+                .amount(0L)
+                .member(member)
+                .build();
+        pointRepository.save(point);
+
+        return member.getName();
     }
 
     @PreAuthorize("@memberAccessHandler.ownershipCheck(#memberId)")
