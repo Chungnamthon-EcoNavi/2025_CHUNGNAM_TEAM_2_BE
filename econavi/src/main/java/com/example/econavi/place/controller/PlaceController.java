@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -70,14 +69,13 @@ public class PlaceController {
     )
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PlaceDto> addPlace(
-            @Valid @RequestPart AddPlaceRequestDto request,
-            @RequestPart(value = "images", required = false) List<MultipartFile> images,
+            @Valid @RequestBody AddPlaceRequestDto request,
             HttpServletRequest httpServletRequest
     ) {
         String token = httpServletRequest.getHeader("Authorization").substring(7);
         Long memberId = jwtUtil.getIdFromToken(token);
 
-        return ResponseEntity.ok(placeService.addPlace(memberId, request, images));
+        return ResponseEntity.ok(placeService.addPlace(memberId, request));
     }
 
     @Operation(

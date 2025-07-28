@@ -3,10 +3,10 @@ package com.example.econavi.unit.service;
 import com.example.econavi.member.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
 import com.example.econavi.member.type.Role;
+import com.example.econavi.photo.repository.PlacePhotoRepository;
 import com.example.econavi.place.dto.AddPlaceRequestDto;
 import com.example.econavi.place.dto.PlaceDto;
 import com.example.econavi.place.entity.Place;
-import com.example.econavi.photo.repository.PlacePhotoRepository;
 import com.example.econavi.place.repository.PlaceRepository;
 import com.example.econavi.place.service.PlaceService;
 import com.example.econavi.place.type.PlaceType;
@@ -93,7 +93,7 @@ class PlaceServiceTest {
         given(placeRepository.save(any(Place.class))).willReturn(place);
 
         // when
-        PlaceDto result = placeService.addPlace(member.getId(), request, List.of());
+        PlaceDto result = placeService.addPlace(member.getId(), request);
 
         // then
         assertNotNull(result);
