@@ -1,7 +1,7 @@
-package com.example.econavi.point.repository;
+package com.example.econavi.product.repository;
 
 import com.example.econavi.member.entity.Member;
-import com.example.econavi.point.entity.PointHistory;
+import com.example.econavi.product.entity.PointHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

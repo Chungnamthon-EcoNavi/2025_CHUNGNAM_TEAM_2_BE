@@ -5,7 +5,6 @@ import com.example.econavi.member.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
 import com.example.econavi.member.type.Role;
 import com.example.econavi.place.dto.AddPlaceRequestDto;
-import com.example.econavi.place.dto.CoordinateDto;
 import com.example.econavi.place.entity.Place;
 import com.example.econavi.place.repository.PlaceRepository;
 import com.example.econavi.place.type.PlaceType;
@@ -23,7 +22,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -199,15 +197,14 @@ class PlaceIntegrationTest {
     @Test
     @DisplayName("[PlaceController][Integration] aroundPlace test_success")
     void aroundPlace_test_success() throws Exception {
-        CoordinateDto coordinate = new CoordinateDto(
-                new BigDecimal("37.4979"),
-                new BigDecimal("127.0276")
-        );
+        BigDecimal latitude = new BigDecimal("37.4979");
+        BigDecimal longitude = new BigDecimal("127.0276");
 
         mockMvc.perform(get("/place/around")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(coordinate))
                         .param("distanceInKm", "2.0")
+                        .param("latitude", latitude.toString())
+                        .param("longitude", longitude.toString())
                         .header("Authorization", "Bearer " + validToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(greaterThan(0)));

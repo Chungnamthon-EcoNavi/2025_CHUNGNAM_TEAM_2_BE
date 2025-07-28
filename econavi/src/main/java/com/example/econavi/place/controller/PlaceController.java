@@ -2,9 +2,7 @@ package com.example.econavi.place.controller;
 
 import com.example.econavi.auth.security.JwtUtil;
 import com.example.econavi.place.dto.AddPlaceRequestDto;
-import com.example.econavi.place.dto.CoordinateDto;
 import com.example.econavi.place.dto.PlaceDto;
-import com.example.econavi.place.dto.PlacePhotoDto;
 import com.example.econavi.place.service.PlaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -17,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -57,10 +56,11 @@ public class PlaceController {
     )
     @GetMapping("/around")
     public ResponseEntity<List<PlaceDto>> aroundPlaces(
-            @RequestBody @Valid CoordinateDto currentCoordinate,
-            @RequestParam double distanceInKm
+            @RequestParam BigDecimal latitude,
+            @RequestParam BigDecimal longitude,
+            @RequestParam double distance
     ) {
-        return ResponseEntity.ok(placeService.getAroundPlaces(currentCoordinate, distanceInKm));
+        return ResponseEntity.ok(placeService.getAroundPlaces(latitude, longitude, distance));
     }
 
     @Operation(

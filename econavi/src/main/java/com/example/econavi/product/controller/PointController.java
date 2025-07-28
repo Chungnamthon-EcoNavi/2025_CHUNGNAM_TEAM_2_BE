@@ -1,9 +1,9 @@
-package com.example.econavi.point.controller;
+package com.example.econavi.product.controller;
 
 import com.example.econavi.auth.security.JwtUtil;
-import com.example.econavi.point.dto.PointDto;
-import com.example.econavi.point.dto.PointHistoryDto;
-import com.example.econavi.point.service.PointService;
+import com.example.econavi.product.dto.PointDto;
+import com.example.econavi.product.dto.PointHistoryDto;
+import com.example.econavi.product.service.PointService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
