@@ -1,7 +1,6 @@
-package com.example.econavi.member.entity;
+package com.example.econavi.photo.entity;
 
-import com.example.econavi.member.type.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.econavi.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

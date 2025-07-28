@@ -6,7 +6,7 @@ import com.example.econavi.member.type.Role;
 import com.example.econavi.place.dto.AddPlaceRequestDto;
 import com.example.econavi.place.dto.PlaceDto;
 import com.example.econavi.place.entity.Place;
-import com.example.econavi.place.repository.PlacePhotoRepository;
+import com.example.econavi.photo.repository.PlacePhotoRepository;
 import com.example.econavi.place.repository.PlaceRepository;
 import com.example.econavi.place.service.PlaceService;
 import com.example.econavi.place.type.PlaceType;

@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -64,14 +63,8 @@ class PointIntegrationTest {
                 .name("테스트")
                 .role(Role.USER)
                 .build();
-        String json = objectMapper.writeValueAsString(signUpRequest);
 
-        MockMultipartFile requestFile = new MockMultipartFile(
-                "request",
-                "",
-                "application/json",
-                json.getBytes()
-        );
+        String json = objectMapper.writeValueAsString(signUpRequest);
 
         loginRequest = LoginDto.Request.builder()
                 .username(signUpRequest.getUsername())
@@ -79,8 +72,8 @@ class PointIntegrationTest {
                 .build();
 
         mockMvc.perform(multipart("/auth/signup")
-                        .file(requestFile)
-                        .contentType(MediaType.MULTIPART_FORM_DATA))
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
         MvcResult loginResult = mockMvc.perform(post("/auth/login")

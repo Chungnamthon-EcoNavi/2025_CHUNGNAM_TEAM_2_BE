@@ -202,7 +202,7 @@ class PlaceIntegrationTest {
 
         mockMvc.perform(get("/place/around")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .param("distanceInKm", "2.0")
+                        .param("distance", "2.0")
                         .param("latitude", latitude.toString())
                         .param("longitude", longitude.toString())
                         .header("Authorization", "Bearer " + validToken))

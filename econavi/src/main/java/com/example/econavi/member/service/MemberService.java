@@ -5,13 +5,12 @@ import com.example.econavi.auth.service.AuthService;
 import com.example.econavi.common.code.AuthResponseCode;
 import com.example.econavi.common.exception.ApiException;
 import com.example.econavi.member.dto.MemberDto;
-import com.example.econavi.member.dto.MemberPhotoDto;
 import com.example.econavi.member.dto.UpdateNameRequestDto;
 import com.example.econavi.member.dto.UpdatePasswordRequestDto;
 import com.example.econavi.member.entity.Member;
-import com.example.econavi.member.entity.MemberPhoto;
-import com.example.econavi.member.repository.MemberPhotoRepository;
 import com.example.econavi.member.repository.MemberRepository;
+import com.example.econavi.photo.entity.MemberPhoto;
+import com.example.econavi.photo.repository.MemberPhotoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,9 +35,7 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new ApiException(AuthResponseCode.MEMBER_NOT_FOUND));
 
-        List<MemberPhoto> photos = memberPhotoRepository.findByMember(member);
-
-        return MemberDto.fromEntity(member, photos.stream().map(MemberPhotoDto::fromEntity).toList());
+        return MemberDto.fromEntity(member);
     }
 
     @Transactional
@@ -52,10 +49,7 @@ public class MemberService {
         member.setName(request.getName());
         member = memberRepository.save(member);
 
-
-        List<MemberPhoto> photos = memberPhotoRepository.findByMember(member);
-
-        return MemberDto.fromEntity(member, photos.stream().map(MemberPhotoDto::fromEntity).toList());
+        return MemberDto.fromEntity(member);
     }
 
     @Transactional
@@ -71,9 +65,7 @@ public class MemberService {
 
         authService.logout(memberId, token);
 
-        List<MemberPhoto> photos = memberPhotoRepository.findByMember(member);
-
-        return MemberDto.fromEntity(member, photos.stream().map(MemberPhotoDto::fromEntity).toList());
+        return MemberDto.fromEntity(member);
     }
 
     @Transactional
@@ -89,6 +81,6 @@ public class MemberService {
         List<MemberPhoto> photos = memberPhotoRepository.findByMember(member);
         memberPhotoRepository.deleteAll(photos);
 
-        return MemberDto.fromEntity(member, photos.stream().map(MemberPhotoDto::fromEntity).toList());
+        return MemberDto.fromEntity(member);
     }
 }

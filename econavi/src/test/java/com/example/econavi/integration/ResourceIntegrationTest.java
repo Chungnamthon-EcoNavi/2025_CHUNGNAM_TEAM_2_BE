@@ -88,23 +88,10 @@ public class ResourceIntegrationTest {
     @DisplayName("[FileController][Integration] getMemberPhoto test_success")
     void getMemberPhoto_test_success() throws Exception {
         String json = objectMapper.writeValueAsString(signUpRequestDto);
-        MockMultipartFile requestFile = new MockMultipartFile(
-                "request",
-                "",
-                "application/json",
-                json.getBytes()
-        );
-        MockMultipartFile imageFile = new MockMultipartFile(
-                "images",
-                "image.jpg",
-                "image/jpeg",
-                "Fake content".getBytes()
-        );
 
         mockMvc.perform(multipart("/auth/signup")
-                        .file(requestFile)
-                        .file(imageFile)
-                        .contentType(MediaType.MULTIPART_FORM_DATA))
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
