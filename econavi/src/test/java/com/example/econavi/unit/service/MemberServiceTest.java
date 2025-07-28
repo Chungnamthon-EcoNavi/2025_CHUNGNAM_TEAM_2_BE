@@ -6,6 +6,7 @@ import com.example.econavi.member.dto.MemberDto;
 import com.example.econavi.member.dto.UpdateNameRequestDto;
 import com.example.econavi.member.dto.UpdatePasswordRequestDto;
 import com.example.econavi.member.entity.Member;
+import com.example.econavi.member.repository.MemberPhotoRepository;
 import com.example.econavi.member.repository.MemberRepository;
 import com.example.econavi.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
@@ -46,6 +47,9 @@ class MemberServiceTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private MemberPhotoRepository memberPhotoRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -169,6 +173,9 @@ class MemberServiceTest {
         public MemberRepository memberRepository() {
             return Mockito.mock(MemberRepository.class);
         }
+
+        @Bean
+        public MemberPhotoRepository memberPhotoRepository() { return Mockito.mock(MemberPhotoRepository.class); }
 
         @Bean
         public JwtBlacklistService jwtBlacklistService() {

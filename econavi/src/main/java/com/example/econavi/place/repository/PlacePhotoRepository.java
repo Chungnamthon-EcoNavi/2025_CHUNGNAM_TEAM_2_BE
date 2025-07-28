@@ -1,0 +1,13 @@
+package com.example.econavi.place.repository;
+
+import com.example.econavi.place.entity.Place;
+import com.example.econavi.place.entity.PlacePhoto;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface PlacePhotoRepository extends JpaRepository<PlacePhoto, Long> {
+    List<PlacePhoto> findByPlace(Place place);
+}

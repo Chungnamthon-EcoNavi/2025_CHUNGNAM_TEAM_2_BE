@@ -4,6 +4,7 @@ import com.example.econavi.auth.security.JwtUtil;
 import com.example.econavi.place.dto.AddPlaceRequestDto;
 import com.example.econavi.place.dto.CoordinateDto;
 import com.example.econavi.place.dto.PlaceDto;
+import com.example.econavi.place.dto.PlacePhotoDto;
 import com.example.econavi.place.service.PlaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -11,8 +12,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -65,15 +68,16 @@ public class PlaceController {
             description = "STAFF만 사용 가능",
             security = @SecurityRequirement(name = "bearerAuth")
     )
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PlaceDto> addPlace(
-            @Valid @RequestBody AddPlaceRequestDto request,
+            @Valid @RequestPart AddPlaceRequestDto request,
+            @RequestPart(value = "images", required = false) List<MultipartFile> images,
             HttpServletRequest httpServletRequest
     ) {
         String token = httpServletRequest.getHeader("Authorization").substring(7);
         Long memberId = jwtUtil.getIdFromToken(token);
 
-        return ResponseEntity.ok(placeService.addPlace(memberId, request));
+        return ResponseEntity.ok(placeService.addPlace(memberId, request, images));
     }
 
     @Operation(

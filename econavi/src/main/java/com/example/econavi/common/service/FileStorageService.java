@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Service
 public class FileStorageService {
-    private final Path rootLocation = Paths.get("/opt/sodamsodam/uploads");
+    private final Path rootLocation = Paths.get("/opt/econavi/uploads");
 
     public String store(MultipartFile file) throws IOException {
         Files.createDirectories(rootLocation);
@@ -32,6 +32,15 @@ public class FileStorageService {
             return resource;
         } else {
             throw new RuntimeException("파일을 찾을 수 없습니다: " + filename);
+        }
+    }
+
+    public void delete(String filename) {
+        try {
+            Path file = rootLocation.resolve(filename);
+            Files.deleteIfExists(file); // 파일 없으면 조용히 무시
+        } catch (IOException e) {
+            throw new RuntimeException("파일 삭제 실패: " + filename, e);
         }
     }
 }

@@ -18,10 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -111,12 +113,26 @@ class PlaceIntegrationTest {
     @Test
     @DisplayName("[PlaceController][Integration] addPlace test_success")
     void addPlace_test_success() throws Exception {
-        String json = new ObjectMapper().writeValueAsString(addPlaceRequest);
+        String json = objectMapper.writeValueAsString(addPlaceRequest);
 
-        mockMvc.perform(post("/place/add")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + validToken)
-                        .content(json))
+        MockMultipartFile requestFile = new MockMultipartFile(
+                "request",
+                "",
+                "application/json",
+                json.getBytes()
+        );
+        MockMultipartFile imageFile = new MockMultipartFile(
+                "images",
+                "image.jpg",
+                "image/jpeg",
+                "Fake content".getBytes()
+        );
+
+        mockMvc.perform(multipart("/place/add")
+                        .file(requestFile)
+                        .file(imageFile)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .header("Authorization", "Bearer " + validToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(addPlaceRequest.getName()))
                 .andExpect(jsonPath("$.address").value(addPlaceRequest.getAddress()));
@@ -135,11 +151,25 @@ class PlaceIntegrationTest {
                 .build());
         String token = jwtUtil.generateToken(unauthorizedMember.getId());
 
+        MockMultipartFile requestFile = new MockMultipartFile(
+                "request",
+                "",
+                "application/json",
+                json.getBytes()
+        );
+        MockMultipartFile imageFile = new MockMultipartFile(
+                "images",
+                "image.jpg",
+                "image/jpeg",
+                "Fake content".getBytes()
+        );
+
         // 일반 유저인 경우
-        mockMvc.perform(post("/place/add")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + token)
-                        .content(json))
+        mockMvc.perform(multipart("/place/add")
+                        .file(requestFile)
+                        .file(imageFile)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isUnauthorized());
 
         // Authorization 헤더 없음

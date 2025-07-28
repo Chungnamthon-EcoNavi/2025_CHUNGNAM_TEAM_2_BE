@@ -7,11 +7,13 @@ import com.example.econavi.auth.security.JwtUtil;
 import com.example.econavi.common.code.AuthResponseCode;
 import com.example.econavi.common.code.GeneralResponseCode;
 import com.example.econavi.common.exception.ApiException;
+import com.example.econavi.common.service.FileStorageService;
 import com.example.econavi.member.entity.Member;
+import com.example.econavi.member.entity.MemberPhoto;
+import com.example.econavi.member.repository.MemberPhotoRepository;
 import com.example.econavi.member.repository.MemberRepository;
 import com.example.econavi.point.entity.Point;
 import com.example.econavi.point.repository.PointRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +24,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -29,6 +36,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final MemberRepository memberRepository;
+    private final MemberPhotoRepository memberPhotoRepository;
+    private final FileStorageService fileStorageService;
     private final PointRepository pointRepository;
     private final JwtUtil jwtUtil;
     private final JwtBlacklistService jwtBlacklistService;
@@ -49,7 +58,7 @@ public class AuthService {
     }
 
     @Transactional
-    public String signUp(@Valid SignUpRequestDto request) {
+    public String signUp(SignUpRequestDto request, List<MultipartFile> images) {
         if (memberRepository.countByUsername(request.getUsername()) > 0) {
             throw new ApiException(GeneralResponseCode.DUPLICATED_USERNAME);
         }
@@ -68,6 +77,24 @@ public class AuthService {
                 .member(member)
                 .build();
         pointRepository.save(point);
+
+        List<MemberPhoto> memberPhotos = new ArrayList<>();
+        if (images != null && !images.isEmpty()) {
+            for (MultipartFile image : images) {
+                try {
+                    String url = fileStorageService.store(image);
+                    MemberPhoto memberPhoto = MemberPhoto.builder()
+                            .photoUrl(url)
+                            .member(member)
+                            .build();
+                    memberPhotos.add(memberPhoto);
+                } catch (IOException e) {
+                    throw new ApiException(GeneralResponseCode.INTERNAL_SERVER_ERROR);
+                }
+            }
+
+            memberPhotoRepository.saveAll(memberPhotos);
+        }
 
         return member.getName();
     }

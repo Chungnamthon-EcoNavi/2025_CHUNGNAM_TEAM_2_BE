@@ -6,6 +6,7 @@ import com.example.econavi.member.type.Role;
 import com.example.econavi.place.dto.AddPlaceRequestDto;
 import com.example.econavi.place.dto.PlaceDto;
 import com.example.econavi.place.entity.Place;
+import com.example.econavi.place.repository.PlacePhotoRepository;
 import com.example.econavi.place.repository.PlaceRepository;
 import com.example.econavi.place.service.PlaceService;
 import com.example.econavi.place.type.PlaceType;
@@ -39,6 +40,9 @@ class PlaceServiceTest {
 
     @Mock
     private MemberRepository memberRepository;
+
+    @Mock
+    private PlacePhotoRepository placePhotoRepository;
 
     @InjectMocks
     private PlaceService placeService;
@@ -89,7 +93,7 @@ class PlaceServiceTest {
         given(placeRepository.save(any(Place.class))).willReturn(place);
 
         // when
-        PlaceDto result = placeService.addPlace(member.getId(), request);
+        PlaceDto result = placeService.addPlace(member.getId(), request, List.of());
 
         // then
         assertNotNull(result);
