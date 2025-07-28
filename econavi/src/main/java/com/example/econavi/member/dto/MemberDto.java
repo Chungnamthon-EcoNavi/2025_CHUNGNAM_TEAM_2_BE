@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,17 +18,15 @@ public class MemberDto {
     private String username;
     private String name;
     private Role role;
-    private List<MemberPhotoDto> photoDtos;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public static MemberDto fromEntity(Member member, List<MemberPhotoDto> photoDtos) {
+    public static MemberDto fromEntity(Member member) {
         return MemberDto.builder()
                 .id(member.getId())
                 .username(member.getUsername())
                 .name(member.getName())
                 .role(member.getRole())
-                .photoDtos(photoDtos)
                 .createdAt(member.getCreatedAt())
                 .updatedAt(member.getUpdatedAt())
                 .build();

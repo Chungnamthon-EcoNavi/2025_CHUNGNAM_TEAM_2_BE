@@ -10,12 +10,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,12 +37,11 @@ public class AuthController {
             summary = "회원가입",
             description = "회원가입"
     )
-    @PostMapping(value = "/signup", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping("/signup")
     public ResponseEntity<String> signUp(
-            @Valid @RequestPart SignUpRequestDto request,
-            @RequestPart(value = "images", required = false) List<MultipartFile> images
+            @Valid @RequestBody SignUpRequestDto request
     ) {
-        return ResponseEntity.ok("회원가입 성공 " + authService.signUp(request, images));
+        return ResponseEntity.ok("회원가입 성공 " + authService.signUp(request));
     }
 
     @Operation(

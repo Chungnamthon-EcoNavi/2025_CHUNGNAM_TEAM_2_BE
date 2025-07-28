@@ -6,7 +6,7 @@ import com.example.econavi.member.dto.MemberDto;
 import com.example.econavi.member.dto.UpdateNameRequestDto;
 import com.example.econavi.member.dto.UpdatePasswordRequestDto;
 import com.example.econavi.member.entity.Member;
-import com.example.econavi.member.repository.MemberPhotoRepository;
+import com.example.econavi.photo.repository.MemberPhotoRepository;
 import com.example.econavi.member.repository.MemberRepository;
 import com.example.econavi.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;

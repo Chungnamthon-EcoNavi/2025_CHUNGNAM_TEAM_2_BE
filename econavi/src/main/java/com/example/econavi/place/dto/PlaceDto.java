@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,11 +25,10 @@ public class PlaceDto {
     private String address;
     private BigDecimal latitude;
     private BigDecimal longitude;
-    private List<PlacePhotoDto> photoDtos;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public static PlaceDto fromEntity(Place place, List<PlacePhotoDto> photoDtos) {
+    public static PlaceDto fromEntity(Place place) {
         return PlaceDto.builder()
                 .id(place.getId())
                 .ownerId(place.getOwner().getId())
@@ -42,7 +40,6 @@ public class PlaceDto {
                 .address(place.getAddress())
                 .latitude(place.getLatitude())
                 .longitude(place.getLongitude())
-                .photoDtos(photoDtos)
                 .createdAt(place.getCreatedAt())
                 .updatedAt(place.getUpdatedAt())
                 .build();

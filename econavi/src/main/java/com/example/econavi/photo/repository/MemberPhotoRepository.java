@@ -1,7 +1,7 @@
-package com.example.econavi.member.repository;
+package com.example.econavi.photo.repository;
 
 import com.example.econavi.member.entity.Member;
-import com.example.econavi.member.entity.MemberPhoto;
+import com.example.econavi.photo.entity.MemberPhoto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
