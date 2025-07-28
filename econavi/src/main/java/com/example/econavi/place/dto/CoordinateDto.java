@@ -14,8 +14,8 @@ import java.math.BigDecimal;
 @Builder
 public class CoordinateDto {
     @Digits(integer = 3, fraction = 7)
-    private BigDecimal longitude;
+    private BigDecimal latitude;
 
     @Digits(integer = 3, fraction = 7)
-    private BigDecimal latitude;
+    private BigDecimal longitude;
 }
