@@ -6,7 +6,7 @@ import com.example.econavi.auth.security.JwtUtil;
 import com.example.econavi.member.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
 import com.example.econavi.member.type.Role;
-import com.example.econavi.point.repository.PointRepository;
+import com.example.econavi.product.repository.PointRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
