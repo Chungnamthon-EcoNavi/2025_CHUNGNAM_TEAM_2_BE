@@ -7,6 +7,7 @@ import com.example.econavi.member.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
 import com.example.econavi.member.type.Role;
 import com.example.econavi.place.dto.AddPlaceRequestDto;
+import com.example.econavi.place.dto.CoordinateDto;
 import com.example.econavi.place.dto.PlaceDto;
 import com.example.econavi.place.entity.Place;
 import com.example.econavi.place.repository.PlaceRepository;
@@ -16,7 +17,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,13 +38,26 @@ public class PlaceService {
         return places.stream().map(PlaceDto::fromEntity).toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<PlaceDto> searchPlaces(String keyword) {
+        List<Place> places = placeRepository.findByNameContaining(keyword);
+
+        return places.stream().map(PlaceDto::fromEntity).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PlaceDto> getAroundPlaces(CoordinateDto currentCoordinate) {
+        //List<Place> places = placeRepository.findB
+        return new ArrayList<PlaceDto>();
+    }
+
     @Transactional
     @PreAuthorize("@memberAccessHandler.ownershipCheck(#memberId)")
     public PlaceDto addPlace(Long memberId, AddPlaceRequestDto request) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new ApiException(AuthResponseCode.MEMBER_NOT_FOUND));
 
-        if(member.getRole() != Role.STAFF){
+        if (member.getRole() != Role.STAFF) {
             throw new ApiException(AuthResponseCode.UNAUTHORIZED);
         }
 
