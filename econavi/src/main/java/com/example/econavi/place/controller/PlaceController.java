@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,7 +66,7 @@ public class PlaceController {
             description = "STAFF만 사용 가능",
             security = @SecurityRequirement(name = "bearerAuth")
     )
-    @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping("/add")
     public ResponseEntity<PlaceDto> addPlace(
             @Valid @RequestBody AddPlaceRequestDto request,
             HttpServletRequest httpServletRequest
