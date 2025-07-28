@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface PlacePhotoRepository extends JpaRepository<PlacePhoto, Long> {
     List<PlacePhoto> findByPlace(Place place);
+
+    List<PlacePhoto> findByPlace_id(Long placeId);
 }
