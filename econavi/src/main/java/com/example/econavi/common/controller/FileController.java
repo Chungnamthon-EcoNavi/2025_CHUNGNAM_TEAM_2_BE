@@ -21,7 +21,7 @@ public class FileController {
     private final FileStorageService fileStorageService;
 
     @Operation(
-            summary = "",
+            summary = "파일 다운로드",
             description = "정적 리소스 url을 통해 다운로드",
             security = @SecurityRequirement(name = "bearerAuth")
     )
