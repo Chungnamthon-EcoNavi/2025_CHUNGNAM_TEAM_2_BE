@@ -5,6 +5,7 @@ import com.example.econavi.member.entity.Member;
 import com.example.econavi.member.repository.MemberRepository;
 import com.example.econavi.member.type.Role;
 import com.example.econavi.place.dto.AddPlaceRequestDto;
+import com.example.econavi.place.dto.CoordinateDto;
 import com.example.econavi.place.entity.Place;
 import com.example.econavi.place.repository.PlaceRepository;
 import com.example.econavi.place.type.PlaceType;
@@ -25,6 +26,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,6 +48,9 @@ class PlaceIntegrationTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private String validToken;
     private String invalidToken;
@@ -76,6 +82,24 @@ class PlaceIntegrationTest {
                 .startDate(Timestamp.valueOf(LocalDateTime.of(2025, 8, 1, 10, 0)))
                 .endDate(Timestamp.valueOf(LocalDateTime.of(2025, 8, 30, 18, 0)))
                 .build();
+
+        placeRepository.save(Place.builder()
+                .name("강남역")
+                .placeType(PlaceType.EVENT)
+                .owner(testMember)
+                .description("test")
+                .latitude(new BigDecimal("37.4979"))
+                .longitude(new BigDecimal("127.0276"))
+                .build());
+
+        placeRepository.save(Place.builder()
+                .name("서초역")
+                .placeType(PlaceType.EVENT)
+                .owner(testMember)
+                .description("test")
+                .latitude(new BigDecimal("37.4919"))
+                .longitude(new BigDecimal("127.0076"))
+                .build());
     }
 
     @AfterEach
@@ -133,6 +157,33 @@ class PlaceIntegrationTest {
     }
 
     @Test
+    @DisplayName("[PlaceController][Integration] searchPlaces test_success")
+    void searchPlace_test_success() throws Exception {
+        mockMvc.perform(get("/place/search")
+                        .param("keyword", "강남")
+                        .header("Authorization", "Bearer " + validToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value(containsString("강남")));
+    }
+
+    @Test
+    @DisplayName("[PlaceController][Integration] aroundPlace test_success")
+    void aroundPlace_test_success() throws Exception {
+        CoordinateDto coordinate = new CoordinateDto(
+                new BigDecimal("37.4979"),
+                new BigDecimal("127.0276")
+        );
+
+        mockMvc.perform(get("/place/around")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(coordinate))
+                        .param("distanceInKm", "2.0")
+                        .header("Authorization", "Bearer " + validToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(greaterThan(0)));
+    }
+
+    @Test
     @DisplayName("[PlaceController][Integration] getPlaces test_success")
     void getPlaces_test_success() throws Exception {
         Place place = Place.builder()
@@ -153,8 +204,7 @@ class PlaceIntegrationTest {
                         .header("Authorization", "Bearer " + validToken)
                         .param("size", "10"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("테스트장소"))
-                .andExpect(jsonPath("$[0].address").value("서울 강남구"));
+                .andExpect(jsonPath("$[0].name").value("강남역"));
     }
 
     @Test

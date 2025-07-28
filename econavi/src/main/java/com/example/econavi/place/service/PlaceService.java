@@ -17,9 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,13 +40,17 @@ public class PlaceService {
     public List<PlaceDto> searchPlaces(String keyword) {
         List<Place> places = placeRepository.findByNameContaining(keyword);
 
-        return places.stream().map(PlaceDto::fromEntity).collect(Collectors.toList());
+        return places.stream().map(PlaceDto::fromEntity).toList();
     }
 
     @Transactional(readOnly = true)
-    public List<PlaceDto> getAroundPlaces(CoordinateDto currentCoordinate) {
-        //List<Place> places = placeRepository.findB
-        return new ArrayList<PlaceDto>();
+    public List<PlaceDto> getAroundPlaces(CoordinateDto currentCoordinate, double distanceInKm) {
+        List<Place> places = placeRepository.findPlaceWithDistance(
+                currentCoordinate.getLatitude(),
+                currentCoordinate.getLongitude(),
+                distanceInKm
+        );
+        return places.stream().map(PlaceDto::fromEntity).toList();
     }
 
     @Transactional
