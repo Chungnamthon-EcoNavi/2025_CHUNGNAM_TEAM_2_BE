@@ -14,4 +14,6 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
     int countByNameAndAddress(String name, String address);
 
     long countByNameAndAddressAndIdNot(String name, String address, Long id);
+
+    List<Place> findByNameContaining(String keyword);
 }
