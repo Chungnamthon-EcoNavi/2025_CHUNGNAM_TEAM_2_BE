@@ -16,12 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -77,24 +75,9 @@ class AuthIntegrationTest {
 
         String json = objectMapper.writeValueAsString(request);
 
-        MockMultipartFile jsonPart = new MockMultipartFile(
-                "request",                  // @RequestPart 이름
-                "",                         // 파일 이름 (없어도 됨)
-                "application/json",         // content type
-                json.getBytes()             // 내용
-        );
-
-        MockMultipartFile imagePart = new MockMultipartFile(
-                "images",                   // @RequestPart 이름
-                "test.jpg",                 // 파일 이름
-                "image/jpeg",               // content type
-                "fake image data".getBytes() // 내용
-        );
-
-        mockMvc.perform(multipart(BASE_URI + "/signup")
-                        .file(jsonPart)
-                        .file(imagePart)
-                        .contentType(MediaType.MULTIPART_FORM_DATA))
+        mockMvc.perform(post(BASE_URI + "/signup")
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 

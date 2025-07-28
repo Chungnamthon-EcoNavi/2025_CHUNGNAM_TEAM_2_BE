@@ -1,5 +1,6 @@
-package com.example.econavi.place.entity;
+package com.example.econavi.photo.entity;
 
+import com.example.econavi.place.entity.Place;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

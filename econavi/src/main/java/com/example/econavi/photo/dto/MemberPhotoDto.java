@@ -1,6 +1,6 @@
-package com.example.econavi.member.dto;
+package com.example.econavi.photo.dto;
 
-import com.example.econavi.member.entity.MemberPhoto;
+import com.example.econavi.photo.entity.MemberPhoto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
