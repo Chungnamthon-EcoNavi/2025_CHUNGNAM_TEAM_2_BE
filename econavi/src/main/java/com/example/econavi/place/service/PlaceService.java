@@ -5,11 +5,9 @@ import com.example.econavi.common.code.GeneralResponseCode;
 import com.example.econavi.common.exception.ApiException;
 import com.example.econavi.common.service.FileStorageService;
 import com.example.econavi.member.entity.Member;
-import com.example.econavi.member.entity.MemberPhoto;
 import com.example.econavi.member.repository.MemberRepository;
 import com.example.econavi.member.type.Role;
 import com.example.econavi.place.dto.AddPlaceRequestDto;
-import com.example.econavi.place.dto.CoordinateDto;
 import com.example.econavi.place.dto.PlaceDto;
 import com.example.econavi.place.dto.PlacePhotoDto;
 import com.example.econavi.place.entity.Place;
@@ -24,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,11 +75,11 @@ public class PlaceService {
     }
 
     @Transactional(readOnly = true)
-    public List<PlaceDto> getAroundPlaces(CoordinateDto currentCoordinate, double distanceInKm) {
+    public List<PlaceDto> getAroundPlaces(BigDecimal latitude, BigDecimal longitude, double distance) {
         List<Place> places = placeRepository.findPlaceWithDistance(
-                currentCoordinate.getLatitude(),
-                currentCoordinate.getLongitude(),
-                distanceInKm
+                latitude,
+                longitude,
+                distance
         );
 
         List<PlaceDto> placeDtos = new ArrayList<>();
