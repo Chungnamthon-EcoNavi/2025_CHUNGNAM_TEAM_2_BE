@@ -1,4 +1,4 @@
-package com.example.econavi.point.entity;
+package com.example.econavi.product.entity;
 
 import com.example.econavi.member.entity.Member;
 import jakarta.persistence.*;
@@ -14,16 +14,19 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "points")
-public class Point {
+@Table(name = "point_history")
+public class PointHistory {
     @Id
-    private Long memberId;
-    @MapsId
-    @OneToOne
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
     @Column(name = "amount")
     private Long amount;
-    @Column(name = "updated_at", insertable = false)
-    private Timestamp updatedAt;
+    @Column(name = "reason")
+    private String reason;
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private Timestamp createdAt;
 }

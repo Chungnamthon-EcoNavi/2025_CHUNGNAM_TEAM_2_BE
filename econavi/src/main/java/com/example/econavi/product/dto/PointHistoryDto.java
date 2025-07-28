@@ -1,8 +1,6 @@
-package com.example.econavi.point.dto;
+package com.example.econavi.product.dto;
 
-import com.example.econavi.member.entity.Member;
-import com.example.econavi.point.entity.PointHistory;
-import jakarta.persistence.*;
+import com.example.econavi.product.entity.PointHistory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

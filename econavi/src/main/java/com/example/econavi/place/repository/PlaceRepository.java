@@ -24,6 +24,6 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
             "cos(radians(:latitude)) * cos(radians(p.latitude)) * " +
             "cos(radians(p.longitude) - radians(:longitude)) + " +
             "sin(radians(:latitude)) * sin(radians(p.latitude)) " +
-            ") < :distanceInKm", nativeQuery = true)
-    List<Place> findPlaceWithDistance(BigDecimal latitude, BigDecimal longitude, double distanceInKm);
+            ") < :distance", nativeQuery = true)
+    List<Place> findPlaceWithDistance(BigDecimal latitude, BigDecimal longitude, double distance);
 }
